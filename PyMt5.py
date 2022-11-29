@@ -5,69 +5,11 @@ Created on Tue Nov 29 11:21:36 2022
 @author: IKU-Trader
 """
 
-# -*- coding: utf-8 -*-
 import pandas as pd
 import MetaTrader5 as mt5
-from datetime import datetime, timedelta, timezone
-import calendar
-import pytz
 from mt5_const import *
-
-
-def timeframeUnit(symbol):
-    try:
-        a = TIMEFRAME[symbol]
-        return a[2]
-    except:
-        return None
-    
-def timeframeTime(symbol):
-    try:
-        a = TIMEFRAME[symbol]
-        return (a[1], a[2])
-    except:
-        return None
-    
-def timeframeConstant(symbol):
-    try:
-        a = TIMEFRAME[symbol]
-        return a[0]
-    except:
-        return None
-    
-def timestamp2jst(utc_server):
-    t = datetime.fromtimestamp(utc_server, TIMEZONE_TOKYO)
-    if isSummerTime(t):
-        dt = 3
-    else:
-        dt = 2
-    t -= timedelta(hours=dt)
-    return t
-
-def isSummerTime(date_time):
-    day0 = dayOfLastSunday(date_time.year, 3)
-    tsummer0 = utcTime(date_time.year, 3, day0, 0, 0)
-    day1 = dayOfLastSunday(date_time.year, 10)
-    tsummer1 = utcTime(date_time.year, 10, day1, 0, 0)
-    if date_time > tsummer0 and date_time < tsummer1:
-        return True
-    else:
-        return False
-    
-def utcTime(year, month, day, hour, minute):
-    local = datetime(year, month, day, hour, minute)
-    return pytz.timezone('UTC').localize(local)    
-    
-    
-def dayOfLastSunday(year, month):
-    '''dow: Monday(0) - Sunday(6)'''
-    dow = 6
-    n = calendar.monthrange(year, month)[1]
-    l = range(n - 6, n + 1)
-    w = calendar.weekday(year, month, l[0])
-    w_l = [i % 7 for i in range(w, w + 7)]
-    return l[w_l.index(dow)]    
-    
+from time_utility import timestamp2jst
+ 
 class PyMt5:
     def __init__(self, market):
         self.market = market
@@ -117,8 +59,8 @@ class PyMt5:
         dic[VOLUME] = v
         return ohlc, ohlcv, dic
      
-    def download(self, timeframe, size=99999):
-        d = mt5.copy_rates_from_pos(self.market, timeframeConstant(timeframe) , 0, size) 
+    def download(self, timeframe:str, size:int=99999):
+        d = mt5.copy_rates_from_pos(self.market, TIMEFRAME[timeframe][0] , 0, size) 
         ohlc, ohlcv, dic = self.convert(d)
         return ohlc, ohlcv, dic
 
@@ -137,9 +79,6 @@ class PyMt5:
 
 # -----
     
-
-
-
     
 def test(size):
     server = PyMt5('DOWUSD')

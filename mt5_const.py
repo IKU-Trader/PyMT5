@@ -31,7 +31,7 @@ UNIT_MINUTE = 'MINUTE'
 UNIT_HOUR = 'HOUR'
 UNIT_DAY = 'DAY'
 
-TIMEZONE_TOKYO = timezone(timedelta(hours=+9), 'Asia/Tokyo')
+
 
 
 
