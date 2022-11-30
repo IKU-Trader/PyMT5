@@ -67,13 +67,13 @@ class PyMt5:
     def downloadRange(self, timeframe, begin_jst, end_jst):
         utc_from = self.jst2serverTime(begin_jst)
         utc_to = self.jst2serverTime(end_jst)
-        d = mt5.copy_rates_range(self.stock, timeframeConstant(timeframe) , utc_from, utc_to) 
+        d = mt5.copy_rates_range(self.stock, TIMEFRAME[timeframe][0] , utc_from, utc_to) 
         data = self.convert2Array(d)
         return data
     
     def downloadTicks(self, timeframe, from_jst, size=100000):
         utc_from = self.jst2serverTime(from_jst)
-        d = mt5.copy_ticks_from(self.stock, timeframeConstant(timeframe) , utc_from, size, mt5.COPY_TICKS_ALL) 
+        d = mt5.copy_ticks_from(self.stock, TIMEFRAME[timeframe][0] , utc_from, size, mt5.COPY_TICKS_ALL) 
         data = self.convert2Array(d)
         return data
 
@@ -81,11 +81,11 @@ class PyMt5:
     
     
 def test(size):
-    server = PyMt5('DOWUSD')
-    ohlc, ohlcv, dic =  server.download('M5', size=size) 
+    server = PyMt5('USDJPY')
+    ohlc, ohlcv, dic =  server.download('M1', size=size) 
     print(ohlc)
     print(dic[TIMEJST])
 
     
 if __name__ == "__main__":
-    test(10)
+    test(3)

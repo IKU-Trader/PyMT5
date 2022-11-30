@@ -15,7 +15,7 @@ TIMEZONE_TOKYO = timezone(timedelta(hours=+9), 'Asia/Tokyo')
 def timestamp2jst(utc_server):
     t = datetime.fromtimestamp(utc_server, TIMEZONE_TOKYO)
     if isSummerTime(t):
-        dt = 3
+        dt = 1
     else:
         dt = 2
     t -= timedelta(hours=dt)
