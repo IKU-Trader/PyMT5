@@ -5,11 +5,7 @@ Created on Tue Nov 29 11:21:36 2022
 @author: IKU-Trader
 """
 
-import sys
-sys.path.append('./')
-sys.path.append('../')
 import pandas as pd
-
 import MetaTrader5 as mt5
 from mt5_const import mt5_const
 from const import const
@@ -232,7 +228,7 @@ class CloseSellPostionMarketOrder(Order):
                          3002,
                          ticket)        
         
-class PyMT5:
+class PyMT5(object):
     def __init__(self, timezone):
         if not mt5.initialize():
             print("initialize() failed")
