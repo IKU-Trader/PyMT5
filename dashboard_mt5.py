@@ -4,8 +4,9 @@ Created on Tue Mar 14 20:41:14 2023
 
 @author: IKU-Trader
 """
+import os
 import sys
-sys.path.append('./libs')
+sys.path.append(os.path.join(os.path.dirname(__file__), '../Utilities'))
 
 import numpy as np
 import pandas as pd
