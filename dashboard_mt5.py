@@ -17,8 +17,8 @@ from dash.dependencies import Input, Output, State
 import plotly.graph_objects as go
 from plotly.figure_factory import create_candlestick
 
-from PyMT5 import PyMT5
-from TimeUtils import TimeUtils
+from py_mt5 import PyMT5
+from time_utils import TimeUtils
 from const import const
 
 INTERVAL_MSEC = 200

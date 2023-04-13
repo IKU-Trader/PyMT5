@@ -9,7 +9,7 @@ import pandas as pd
 import MetaTrader5 as mt5
 from mt5_const import mt5_const
 from const import const
-from TimeUtils import TimeUtils
+from time_utils import TimeUtils
 from datetime import datetime
 
 class Order:
